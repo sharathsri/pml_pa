@@ -1,5 +1,5 @@
 ---
-title: "Practical Machine Learning"
+title: "Overview of steps"
 date: "Tuesday, August 16, 2016"
 output: html_document
 ---
