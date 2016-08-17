@@ -120,16 +120,17 @@ $(document).ready(function () {
 </div>
 
 
-<div id="executive-summary" class="section level2">
-<h2>Executive Summary</h2>
-<div id="note-to-reproduce-the-results-set-the-working-folder-to-repo-folder." class="section level3">
-<h3>NOTE: To reproduce the results set the working folder to repo folder.</h3>
+<div id="executive-summary" class="section level3">
+<h3>Executive Summary</h3>
+<p>TODO: Summary goes here</p>
+<div id="note-to-reproduce-the-results-set-the-working-folder-to-repo-folder." class="section level4">
+<h4>NOTE: To reproduce the results set the working folder to repo folder.</h4>
 <pre class="r"><code>library(caret)
 set.seed(6889)</code></pre>
 </div>
 </div>
-<div id="cleaning-data" class="section level2">
-<h2>1. Cleaning Data</h2>
+<div id="cleaning-data" class="section level3">
+<h3>1. Cleaning Data</h3>
 <p>Since there were large number of columns and majority of them were unimportant, a cleaned version of the training and test data set was created by deleting columns in Microsoft Excel. Following are the columns from original training set which are either ‘NA’ or non-covariates with ‘classe’ outcome:</p>
 <pre class="r"><code>allCols&lt;-read.csv(&quot;pml-training.csv&quot;, header=TRUE, stringsAsFactors=FALSE)
 dataset&lt;-read.csv(&quot;clean-pml-training.csv&quot;, header=TRUE, stringsAsFactors=FALSE)
@@ -189,30 +190,30 @@ diffCols</code></pre>
 ## [103] &quot;stddev_pitch_forearm&quot;     &quot;var_pitch_forearm&quot;       
 ## [105] &quot;avg_yaw_forearm&quot;          &quot;stddev_yaw_forearm&quot;      
 ## [107] &quot;var_yaw_forearm&quot;</code></pre>
-<div id="columns-will-be-used-build-a-prediction-model." class="section level3">
-<h3>53 columns will be used build a prediction model.</h3>
+<div id="columns-will-be-used-build-a-prediction-model." class="section level4">
+<h4>53 columns will be used build a prediction model.</h4>
 </div>
 </div>
-<div id="model-selection-procedure" class="section level2">
-<h2>2. Model selection procedure</h2>
-<div id="a-cross-validation-decision" class="section level3">
-<h3>a) Cross-validation decision</h3>
+<div id="model-selection-procedure" class="section level3">
+<h3>2. Model selection procedure</h3>
+<div id="a-cross-validation-decision" class="section level4">
+<h4>a) Cross-validation decision</h4>
 <p>Since we do not know the ‘classe’ column in test data, we cannot test our model on test data. Hence 20% of the data from training set will be used to validate our model. Depending on the accuracy of the model on validation set we can choose the model and perform prediction on test data.</p>
 <pre class="r"><code>inTrain &lt;- createDataPartition(y=dataset$classe,
                               p=0.80, list=FALSE)
 training &lt;- dataset[inTrain,]
 validation &lt;- dataset[-inTrain,]</code></pre>
 </div>
-<div id="b-alertnative-models" class="section level3">
-<h3>b) Alertnative models</h3>
-<div id="lda-model" class="section level4">
-<h4>LDA Model</h4>
+<div id="b-alertnative-models" class="section level4">
+<h4>b) Alertnative models</h4>
+<div id="lda-model" class="section level5">
+<h5>LDA Model</h5>
 <pre class="r"><code>mod1 &lt;- train(classe~.,data=training, method=&quot;lda&quot;)
 pred1 &lt;- predict(mod1,newdata=validation)
 cm1&lt;-confusionMatrix(pred1,validation$classe)</code></pre>
 </div>
-<div id="lda-model-accuracy-and-confusion-matrix" class="section level4">
-<h4>LDA Model Accuracy and Confusion Matrix</h4>
+<div id="lda-model-accuracy-and-confusion-matrix" class="section level5">
+<h5>LDA Model Accuracy and Confusion Matrix</h5>
 <pre class="r"><code>cm1$overall['Accuracy']</code></pre>
 <pre><code>##  Accuracy 
 ## 0.7017589</code></pre>
@@ -225,14 +226,14 @@ cm1&lt;-confusionMatrix(pred1,validation$classe)</code></pre>
 ##          D  89  29  79 452  64
 ##          E   2  29  21  27 448</code></pre>
 </div>
-<div id="random-forest-model" class="section level4">
-<h4>Random Forest Model</h4>
+<div id="random-forest-model" class="section level5">
+<h5>Random Forest Model</h5>
 <pre class="r"><code>mod2 &lt;-train(classe ~.,method=&quot;rf&quot;, data=training, trControl = trainControl(method=&quot;cv&quot;),number=3)
 pred2 &lt;- predict(mod2,newdata=validation)
 cm2&lt;-confusionMatrix(pred2,validation$classe)</code></pre>
 </div>
-<div id="random-forest-model-accuracy-and-confusion-matrix" class="section level4">
-<h4>Random Forest Model Accuracy and Confusion Matrix</h4>
+<div id="random-forest-model-accuracy-and-confusion-matrix" class="section level5">
+<h5>Random Forest Model Accuracy and Confusion Matrix</h5>
 <pre class="r"><code>cm2$overall['Accuracy']</code></pre>
 <pre><code>##  Accuracy 
 ## 0.9961764</code></pre>
@@ -246,22 +247,23 @@ cm2&lt;-confusionMatrix(pred2,validation$classe)</code></pre>
 ##          E    0    0    0    1  716</code></pre>
 </div>
 </div>
-<div id="c-decision-to-choose-a-model" class="section level3">
-<h3>c) Decision to choose a model</h3>
+<div id="c-decision-to-choose-a-model" class="section level4">
+<h4>c) Decision to choose a model</h4>
 <p>The accuracy with Random Forest Model is 99.62%. Hence we will choose the second model for prediction.</p>
 </div>
-<div id="d-out-of-sample-error" class="section level3">
-<h3>d) Out-of-sample error</h3>
+<div id="d-out-of-sample-error" class="section level4">
+<h4>d) Out-of-sample error</h4>
 <p>Out of sample error is calculated as follows:</p>
 <pre class="r"><code>out_of_sample_accuracy&lt;-round((sum(pred2 == validation$classe)/length(pred2))*100,2)
 out_of_sample_error&lt;-100-out_of_sample_accuracy</code></pre>
-<div id="out-of-sample-error-is-0.38." class="section level4">
-<h4>Out of sample error is 0.38%.</h4>
+<div id="out-of-sample-error-is-0.38." class="section level5">
+<h5>Out of sample error is 0.38%.</h5>
 </div>
 </div>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>TODO :: Conclusion goes here.</p>
 </div>
 
 

@@ -3,15 +3,16 @@ title: "Overview of steps"
 date: "Tuesday, August 16, 2016"
 output: html_document
 ---
-## Executive Summary
+### Executive Summary
 
+TODO: Summary goes here
 
-### NOTE: To reproduce the results set the working folder to repo folder.
+#### NOTE: To reproduce the results set the working folder to repo folder.
 ```{r message=FALSE}
 library(caret)
 set.seed(6889)
 ```
-## 1. Cleaning Data
+### 1. Cleaning Data
 Since there were large number of columns and majority of them were unimportant, a cleaned version of the training and test data set was created by deleting columns in Microsoft Excel. Following are the columns from original training set which are either 'NA' or non-covariates with 'classe' outcome:  
 ```{r cache=TRUE}
 allCols<-read.csv("pml-training.csv", header=TRUE, stringsAsFactors=FALSE)
@@ -20,10 +21,10 @@ diffCols<-setdiff(names(allCols),names(dataset))
 diffCols
 ```
 
-### `r length(names(dataset))` columns will be used build a prediction model.
+#### `r length(names(dataset))` columns will be used build a prediction model.
 
-## 2. Model selection procedure
-###  a) Cross-validation decision
+### 2. Model selection procedure
+####  a) Cross-validation decision
 Since we do not know the 'classe' column in test data, we cannot test our model on test data. Hence 20% of the data from training set will be used to validate our model. Depending on the accuracy of the model on validation set we can choose the model and perform prediction on test data.
 
 ```{r cache = TRUE}
@@ -33,45 +34,46 @@ training <- dataset[inTrain,]
 validation <- dataset[-inTrain,]
 ```
 
-###  b) Alertnative models
-#### LDA Model 
+####  b) Alertnative models
+##### LDA Model 
 ```{r cache=TRUE, message=FALSE}
 mod1 <- train(classe~.,data=training, method="lda")
 pred1 <- predict(mod1,newdata=validation)
 cm1<-confusionMatrix(pred1,validation$classe)
 
 ```
-#### LDA Model Accuracy and Confusion Matrix
+##### LDA Model Accuracy and Confusion Matrix
 ```{r}
 cm1$overall['Accuracy']
 cm1$table
 ```
-#### Random Forest Model 
+##### Random Forest Model 
 ```{r cache=TRUE, message=FALSE}
 mod2 <-train(classe ~.,method="rf", data=training, trControl = trainControl(method="cv"),number=3)
 pred2 <- predict(mod2,newdata=validation)
 cm2<-confusionMatrix(pred2,validation$classe)
 
 ```
-#### Random Forest Model Accuracy and Confusion Matrix
+##### Random Forest Model Accuracy and Confusion Matrix
 ```{r}
 cm2$overall['Accuracy']
 cm2$table
 ```
 
 
-###  c) Decision to choose a model
+####  c) Decision to choose a model
 The accuracy with Random Forest Model is `r round(cm2$overall['Accuracy']*100, 2)`%. Hence we will choose the second model for prediction.
 
-###  d) Out-of-sample error
+####  d) Out-of-sample error
 Out of sample error is calculated as follows:
 ```{r}
 out_of_sample_accuracy<-round((sum(pred2 == validation$classe)/length(pred2))*100,2)
 out_of_sample_error<-100-out_of_sample_accuracy
 ```
 
-#### Out of sample error is `r out_of_sample_error`%.
+##### Out of sample error is `r out_of_sample_error`%.
 
 
-## Conclusion
+### Conclusion
 
+TODO :: Conclusion goes here.
