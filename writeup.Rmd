@@ -1,11 +1,11 @@
 ---
 title: "Overview of steps"
-date: "Tuesday, August 16, 2016"
+date: "Thursday, August 18, 2016"
 output: html_document
 ---
 ### Executive Summary
 
-TODO: Summary goes here
+The training data was cleaned using Microsoft Excel. Out of 160 variables only 53 variables were used for building prediction model. The cleaned training and testing .csv file can be found in the GitHub repo. Two models were built using "lda" and "random forest" using 80% of training data to train the model and 20% of training data for validation. Accuracy of prediction on validation set is maximum with Random Forest ensemble method and this model was used for prediction with test data. Out of sample error for Random Forest method is calculated.   
 
 
 ```{r message=FALSE}
@@ -77,13 +77,13 @@ out_of_sample_error<-100-out_of_sample_accuracy
 
 ### 3. Predict outcome in test sample
 Prediction using cleaned test dataset using Model 2 (Random Forest)
-```{r}
+```{r message=FALSE}
 predict(mod2,newdata=testSet)
 ```
 
 ### Conclusion
 
-TODO :: Conclusion goes here.
+By using validation set we can test the model we are trying to build and accuracy on validaion set is a key indicator of performance of the model on test data. Ensemble methods ensure high accuracy.
 
 #### Appendix A: Columns with either 'NA' values or non-covariates
 ```{r}

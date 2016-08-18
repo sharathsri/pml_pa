@@ -115,14 +115,14 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Overview of steps</h1>
-<h4 class="date"><em>Tuesday, August 16, 2016</em></h4>
+<h4 class="date"><em>Thursday, August 18, 2016</em></h4>
 
 </div>
 
 
 <div id="executive-summary" class="section level3">
 <h3>Executive Summary</h3>
-<p>TODO: Summary goes here</p>
+<p>The training data was cleaned using Microsoft Excel. Out of 160 variables only 53 variables were used for building prediction model. The cleaned training and testing .csv file can be found in the GitHub repo. Two models were built using “lda” and “random forest” using 80% of training data to train the model and 20% of training data for validation. Accuracy of prediction on validation set is maximum with Random Forest ensemble method and this model was used for prediction with test data. Out of sample error for Random Forest method is calculated.</p>
 <pre class="r"><code>library(caret)
 set.seed(6889)</code></pre>
 </div>
@@ -214,7 +214,7 @@ out_of_sample_error&lt;-100-out_of_sample_accuracy</code></pre>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>
-<p>TODO :: Conclusion goes here.</p>
+<p>By using validation set we can test the model we are trying to build and accuracy on validaion set is a key indicator of performance of the model on test data. Ensemble methods ensure high accuracy.</p>
 <div id="appendix-a-columns-with-either-na-values-or-non-covariates" class="section level4">
 <h4>Appendix A: Columns with either ‘NA’ values or non-covariates</h4>
 <pre class="r"><code>diffCols</code></pre>
