@@ -131,6 +131,7 @@ set.seed(6889)</code></pre>
 <p>Since there were large number of columns and majority of them were unimportant, a cleaned version of the training and test data set was created by deleting columns in Microsoft Excel. Following are the columns from original training set which are either ‘NA’ or non-covariates with ‘classe’ outcome:</p>
 <pre class="r"><code>allCols&lt;-read.csv(&quot;pml-training.csv&quot;, header=TRUE, stringsAsFactors=FALSE)
 dataset&lt;-read.csv(&quot;clean-pml-training.csv&quot;, header=TRUE, stringsAsFactors=FALSE)
+testSet&lt;-read.csv(&quot;clean-pml-testing.csv&quot;, header=TRUE, stringsAsFactors=FALSE)
 diffCols&lt;-setdiff(names(allCols),names(dataset))</code></pre>
 <p>Refer Appendix A for the list of columns</p>
 <div id="columns-will-be-used-build-a-prediction-model." class="section level4">
@@ -203,6 +204,13 @@ out_of_sample_error&lt;-100-out_of_sample_accuracy</code></pre>
 <h5>Out of sample error is 0.38%.</h5>
 </div>
 </div>
+</div>
+<div id="predict-outcome-in-test-sample" class="section level3">
+<h3>3. Predict outcome in test sample</h3>
+<p>Prediction using cleaned test dataset using Model 2 (Random Forest)</p>
+<pre class="r"><code>predict(mod2,newdata=testSet)</code></pre>
+<pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
+## Levels: A B C D E</code></pre>
 </div>
 <div id="conclusion" class="section level3">
 <h3>Conclusion</h3>

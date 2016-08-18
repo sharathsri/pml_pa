@@ -17,6 +17,7 @@ Since there were large number of columns and majority of them were unimportant, 
 ```{r cache=TRUE}
 allCols<-read.csv("pml-training.csv", header=TRUE, stringsAsFactors=FALSE)
 dataset<-read.csv("clean-pml-training.csv", header=TRUE, stringsAsFactors=FALSE)
+testSet<-read.csv("clean-pml-testing.csv", header=TRUE, stringsAsFactors=FALSE)
 diffCols<-setdiff(names(allCols),names(dataset))
 ```
 
@@ -74,6 +75,11 @@ out_of_sample_error<-100-out_of_sample_accuracy
 
 ##### Out of sample error is `r out_of_sample_error`%.
 
+### 3. Predict outcome in test sample
+Prediction using cleaned test dataset using Model 2 (Random Forest)
+```{r}
+predict(mod2,newdata=testSet)
+```
 
 ### Conclusion
 
