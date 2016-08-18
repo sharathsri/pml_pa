@@ -7,7 +7,7 @@ output: html_document
 
 TODO: Summary goes here
 
-#### NOTE: To reproduce the results set the working folder to repo folder.
+
 ```{r message=FALSE}
 library(caret)
 set.seed(6889)
@@ -18,8 +18,9 @@ Since there were large number of columns and majority of them were unimportant, 
 allCols<-read.csv("pml-training.csv", header=TRUE, stringsAsFactors=FALSE)
 dataset<-read.csv("clean-pml-training.csv", header=TRUE, stringsAsFactors=FALSE)
 diffCols<-setdiff(names(allCols),names(dataset))
-diffCols
 ```
+
+Refer Appendix A for the list of columns
 
 #### `r length(names(dataset))` columns will be used build a prediction model.
 
@@ -77,3 +78,8 @@ out_of_sample_error<-100-out_of_sample_accuracy
 ### Conclusion
 
 TODO :: Conclusion goes here.
+
+#### Appendix A: Columns with either 'NA' values or non-covariates
+```{r}
+diffCols
+````
