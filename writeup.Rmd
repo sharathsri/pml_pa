@@ -5,7 +5,7 @@ output: html_document
 ---
 ### Executive Summary
 
-The training data was cleaned using Microsoft Excel. Out of 160 variables only 53 variables were used for building prediction model. The cleaned training and testing .csv file can be found in the GitHub repo. Two models were built using "lda" and "random forest" using 80% of training data to train the model and 20% of training data for validation. Accuracy of prediction on validation set is maximum with Random Forest ensemble method and this model was used for prediction with test data. Out of sample error for Random Forest method is calculated.   
+The training data was cleaned using Microsoft Excel. Out of 160 variables only 53 variables were used for building prediction model. The cleaned training and testing .csv files can be found in the GitHub repo. Two models were built using "lda" and "random forest" using 80% of training data to train the model and 20% of training data for validation. Accuracy of prediction on validation set is maximum with Random Forest ensemble method and this model was used for prediction with test data. Out of sample error for Random Forest method is calculated.   
 
 
 ```{r message=FALSE}
@@ -65,6 +65,10 @@ cm2$table
 
 ####  c) Decision to choose a model
 The accuracy with Random Forest Model is `r round(cm2$overall['Accuracy']*100, 2)`%. Hence we will choose the second model for prediction.
+
+```{r}
+plot(mod2, log = "y", lwd = 3, main = "Model 2 (Random forest) accuracy", xlab = "Predictors", ylab = "Accuracy")
+```
 
 ####  d) Out-of-sample error
 Out of sample error is calculated as follows:
